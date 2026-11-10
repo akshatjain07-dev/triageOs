@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'><path d='M2 16h6l3-10 6 20 4-14 3 6h8' stroke='%23ef4444' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/><circle cx='29' cy='16' r='2' fill='%2300f2fe'/></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TriageOS</title>
+    <meta name="description" content="TriageOS: AI-based Hospital Triage and Resource Management System with real-time acuity dispatch, predictive ICU telemetry, and neural clinical decision support." />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
+              mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+            },
+            colors: {
+              command: {
+                bg: '#0a0c10',
+                card: '#0d111a',
+                panel: '#101726',
+                border: 'rgba(30, 41, 59, 0.8)',
+              },
+              dark: {
+                950: '#0a0c10',
+                900: '#0d111a',
+                850: '#101726',
+                800: '#1e293b',
+                750: '#283548',
+                700: '#334155',
+                600: '#475569',
+              },
+              neon: {
+                cyan: '#00f2fe',
+                cyanGlow: 'rgba(0, 242, 254, 0.4)',
+                red: '#ef4444',
+                crimson: '#ff1744',
+                redGlow: 'rgba(239, 68, 68, 0.4)',
+              },
+              triage: {
+                critical: '#ef4444',
+                criticalBg: '#450a0a',
+                criticalBorder: '#991b1b',
+                urgent: '#f59e0b',
+                urgentBg: '#451a03',
+                urgentBorder: '#b45309',
+                routine: '#10b981',
+                routineBg: '#022c22',
+                routineBorder: '#047857',
+              }
+            },
+            animation: {
+              'pulse-fast': 'pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'glow-critical': 'glowCritical 2s infinite',
+              'glow-urgent': 'glowUrgent 2.5s infinite',
+              'glow-cyan': 'glowCyan 2.5s infinite',
+              'heartbeat': 'heartbeat 1.5s ease-in-out infinite',
+            },
+            keyframes: {
+              glowCritical: {
+                '0%, 100%': { boxShadow: '0 0 15px rgba(239, 68, 68, 0.4), inset 0 0 10px rgba(239, 68, 68, 0.2)' },
+                '50%': { boxShadow: '0 0 25px rgba(239, 68, 68, 0.8), inset 0 0 15px rgba(239, 68, 68, 0.4)' },
+              },
+              glowUrgent: {
+                '0%, 100%': { boxShadow: '0 0 15px rgba(245, 158, 11, 0.3)' },
+                '50%': { boxShadow: '0 0 25px rgba(245, 158, 11, 0.6)' },
+              },
+              glowCyan: {
+                '0%, 100%': { boxShadow: '0 0 15px rgba(0, 242, 254, 0.3)' },
+                '50%': { boxShadow: '0 0 25px rgba(0, 242, 254, 0.6)' },
+              },
+              heartbeat: {
+                '0%, 100%': { transform: 'scale(1)' },
+                '14%': { transform: 'scale(1.15)' },
+                '28%': { transform: 'scale(1)' },
+                '42%': { transform: 'scale(1.15)' },
+                '70%': { transform: 'scale(1)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      html, body {
+        background-color: #0a0c10;
+        color: #f1f5f9;
+        font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+        overflow-x: hidden;
+      }
+      
+      /* Sleek dark command scrollbars */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0c10;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #1e293b;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #334155;
+      }
+
+      /* Command grid background */
+      .bg-command-grid {
+        background-image: 
+          linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        background-size: 32px 32px;
+      }
+
+      /* Glowing neon utilities */
+      .neon-glow-cyan {
+        box-shadow: 0 0 20px rgba(0, 242, 254, 0.35);
+      }
+      .neon-glow-red {
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.45);
+      }
+      .neon-text-cyan {
+        text-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
+      }
+      .neon-text-red {
+        text-shadow: 0 0 10px rgba(239, 68, 68, 0.7);
+      }
+    </style>
+  </head>
+  <body class="bg-[#0a0c10] text-slate-100 antialiased min-h-screen selection:bg-cyan-500/30 selection:text-cyan-200 bg-command-grid">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
